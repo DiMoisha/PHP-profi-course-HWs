@@ -13,10 +13,10 @@
 
     class Product
     {
-        public $productId;
-        public $productName;
-        public $descr;
-        public $price;
+        protected $productId;
+        protected $productName;
+        protected $descr;
+        protected $price;
 
         function __construct($productId, $productName, $descr, $price) {
             $this -> productId = $productId;
@@ -25,15 +25,31 @@
             $this -> price = $price;
         }
 
+        function getProductId() {
+            return $this -> productId;
+        }
+
+        function getProductName() {
+            return $this -> productName;
+        }
+
+        function getDescr() {
+            return $this -> descr;
+        }
+
+        function getPrice() {
+            return $this -> price;
+        }
+
         function setPrice($price): void {
             $this -> price = $price;
         } 
 
-        function getPrice() {
+        function getPriceString() {
             return "Цена ".$this -> productName." ".$this -> price." руб.";
         }
 
-        function getDescr() {
+        function getFullDescr() {
             return "<h1>".$this -> productName."</h1><p>".$this -> descr."</p>";
         }
     }
