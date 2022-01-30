@@ -1,0 +1,16 @@
+<div id="myModal" class="modal">
+  <span class="close" onclick="document.getElementById('myModal').style.display = 'none';">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+<div class="img-list">
+    {% for image in images %}
+        <div class="myImg" data-src="images/{{ image }}"
+                    onclick="document.getElementById('myModal').style.display = 'block';
+                             document.getElementById('img01').src = this.dataset.src;
+                             document.getElementById('caption').innerHTML = 'Оригинальное изображение';">
+            <img width="200" src="thumbnails/{{ image }}" alt="Фото">
+        </div>
+    {% endfor %}
+</div>
+{% include 'form.html.twig' %}
