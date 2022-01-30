@@ -1,0 +1,15 @@
+{
+  "name": "vendor_name/lessonphp3-1",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "dmter",
+      "email": "email@example.com"
+    }
+  ],
+  "require": {
+    "twig/twig": "1.6.5"
+  }
+}
