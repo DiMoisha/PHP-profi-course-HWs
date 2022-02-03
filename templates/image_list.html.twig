@@ -1,0 +1,26 @@
+<div id="myModal" class="modal">
+  <span class="close" onclick="document.getElementById('myModal').style.display = 'none';">&times;</span>
+  <img class="modal-content" id="img01">
+  <div id="caption"></div>
+</div>
+<div class="img-list">
+    {% include 'image_list_item.html.twig' %}
+</div>
+<hr>
+<div>
+    <a href="#bottom" class="" id="btn-next-photos" onclick="getNextPhotos(25);">Показать следующие 25 фото >></a>
+</div>
+<script>
+    function getNextPhotos(limit){
+        let imageId = $('.img-list .myImg').last().attr('data-imageid');
+        $.ajax({
+            url: "/server/images.php/?id="+imageId.toString()+"&limit="+limit.toString(),
+            cache: false
+        })
+            .done(function(html) {
+                $('.img-list').append(html);
+            });
+
+        return false;
+    };
+</script>

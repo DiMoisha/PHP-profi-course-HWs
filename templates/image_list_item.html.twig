@@ -1,0 +1,8 @@
+{% for id, image in images %}
+    <div class="myImg" data-src="images/{{ image }}" data-imageid="{{ id }}"
+        onclick="document.getElementById('myModal').style.display = 'block';
+        document.getElementById('img01').src = this.dataset.src;
+        document.getElementById('caption').innerHTML = 'Оригинальное изображение';">
+        <img width="200" src="thumbnails/{{ image }}" alt="Фото № {{ id }}">
+    </div>
+{% endfor %}
