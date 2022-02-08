@@ -1,0 +1,27 @@
+{% include 'header.html.twig' %}
+<div>
+    <ul>
+        <li>
+            <a href="/public">Главная</a>
+        </li>
+        <li>
+            <a href="/public/?path=account/register">Регистрация</a>
+        </li>
+        {% if authUser == true %}
+            <li>
+                <a href="/public/?path=account">Личный кабинет</a>
+            </li>
+            <li>
+                <a href="/public/?path=account/logout">Выйти</a>
+            </li>
+        {% else %}
+            <li>
+                <a href="/public/?path=account/login">Войти</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+<section>
+    {{ content_data|raw }}
+</section>
+{% include 'footer.html.twig' %}

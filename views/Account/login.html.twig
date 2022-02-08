@@ -1,0 +1,13 @@
+{% if content_data is defined %}
+    {{ content_data|raw }}
+{% endif %}
+<br>
+<form method="post">
+    <label for="login">Логин: </label>
+    <input type="text" name="login" placeholder="Введите логин" required>
+    <br><br>
+    <label for="passwd">Пароль: </label>
+    <input type="password" name="passwd" placeholder="Введите пароль" required>
+    <hr>
+    <input type="submit" value="Войти >>">&nbsp;&nbsp;&nbsp;&nbsp;<a href="/public">На главную</a>
+</form>

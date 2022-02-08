@@ -1,0 +1,17 @@
+{% include 'header.html.twig' %}
+<div>
+    <ul>
+        <li>
+            <a href="/public">На главную</a>
+        </li>
+        {% if authUser == true %}
+            <li>
+                <a href="/public/?path=account/logout">Выйти</a>
+            </li>
+        {% endif %}
+    </ul>
+</div>
+<section>
+    {{ content_data|raw }}
+</section>
+{% include 'footer.html.twig' %}
