@@ -1,0 +1,77 @@
+{% include 'header.html.twig' %}
+{% if contentData is not defined or contentData is null or (contentData is defined and contentData is iterable and contentData|length < 1) %}
+    <p class="bg-warning">В настоящий момент информация о продукции отсутствует!</p>
+    {% if authUser is defined and authRoleId is defined and authRoleId is not null and authRoleId == 1 %}
+        <hr class="null-margin" />
+        <br />
+        <a href="/addproduct" class = "btn btn-xs-sm-md btn-success" role = "button" title = "Добавить товар">Добавить товар</a>
+    {% endif %}
+{% elseif contentData is defined and contentData is iterable and contentData|length > 0 %}
+    {% if authUser is defined and authRoleId is defined and authRoleId is not null and authRoleId == 1 %}
+        <a href="/addproduct" class = "btn btn-xs-sm-md btn-success" role = "button" title = "Добавить товар">Добавить товар</a>
+    {% endif %}
+    <h2>Цены на продукцию ООО "ЛАГОС"</h2>
+    <div class="table-responsive">
+    <table class="table table-bordered table-hover productlist-product">
+        <thead>
+        <tr>
+            <th>Наименование продукции</th>
+            <th>Ед.изм.</th>
+            <th>Цена по предоплате без НДС</th>
+            <th>Цена по предоплате с НДС</th>
+            <th align="center" class="text-center">
+                <span class="glyphicon glyphicon-shopping-cart"></span>
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for product in contentData %}
+            <tr>
+                <td>
+                    <a href="/product?id={{ product.productid }}" class="product-name" title="Подробнее">{{ product.productname }}</a>
+                </td>
+                <td>
+                    {{ product.unit }}
+                </td>
+                <td>
+                    {% if product.pricewonds is null or product.pricewonds <= 0 %}
+                        по запросу
+                    {% else %}
+                        {{ product.pricewonds }}  руб.
+                    {% endif %}
+                </td>
+                <td>
+                    {% if product.price is null or product.price <= 0 %}
+                        по запросу
+                    {% else %}
+                        {{ product.price }}  руб.
+                    {% endif %}
+                </td>
+                <td>
+                    <form action="/addtocart" method="post" role="form">
+                        <input type="hidden" id="productid" name="productid" value="{{ product.productid }}">
+                        <input type="hidden" id="price" name="price" value="{{ product.price }}">
+                        <button type="submit" class="btn btn-xs-sm-md" role="button" value="Купить" title="Купить">Купить</button></form>
+                </td>
+            </tr>
+            {% if authUser is defined and authRoleId is defined and authRoleId is not null and authRoleId == 1 %}
+                <tr>
+                    <td colspan="4">
+                        <a href="/editproduct?id={{ product.productid }}" class="btn btn-xs-sm-md btn-warning" role = "button" title="Редактировать товар">
+                            <span class="glyphicon glyphicon-edit"></span>&nbsp;Редактировать
+                        </a>
+                        <a href="/removeproduct?id={{ product.productid }}" class="btn btn-xs-sm-md btn-danger" role = "button" title="Удалить товар">
+                            <span class="glyphicon glyphicon-remove"></span>&nbsp;Удалить
+                        </a>
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% if authUser is defined and authRoleId is defined and authRoleId is not null and authRoleId == 1 %}
+        <a href="/addproduct" class = "btn btn-xs-sm-md btn-success" role = "button" title = "Добавить товар">Добавить товар</a>
+    {% endif %}
+{% endif %}
+{% include 'footer.html.twig' %}

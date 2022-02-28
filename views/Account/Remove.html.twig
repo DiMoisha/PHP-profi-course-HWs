@@ -1,0 +1,34 @@
+{% include 'header.html.twig' %}
+<div class="row">
+    <div class="col-md-8">
+        {% if contentData is defined %}
+            {{ contentData|raw }}
+            <br />
+        {% endif %}
+        <section id="loginForm">
+            <form method="post" class="form-horizontal" role="form">
+                <h4>Вы уверены что хотите удалить свою учетную запись?</h4>
+                <hr />
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="login">Логин</label>
+                    <div class="col-md-10">
+                        <input type="text" name="login" class="form-control" id="login"
+                               value="{% if login is defined and login is not null %}{{ login }}{% endif %}" placeholder="Логин пользователя">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="passwd">Пароль</label>
+                    <div class="col-md-10">
+                        <input type="password" name="passwd" class="form-control" id="passwd" placeholder="Пароль">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Удалить" class="btn btn-default btn-primary" />
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+</div>
+{% include 'footer.html.twig' %}

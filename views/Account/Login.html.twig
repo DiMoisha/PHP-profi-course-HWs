@@ -1,0 +1,48 @@
+{% include 'header.html.twig' %}
+<div class="row">
+    <div class="col-md-8">
+        {% if contentData is defined %}
+            {{ contentData|raw }}
+            <br />
+        {% endif %}
+        <section id="loginForm">
+            <form method="post" class="form-horizontal" role="form" enctype = "multipart/form-data">
+                <h4>Используйте вашу учетную запись для входа</h4>
+                <hr />
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="login">Логин</label>
+                    <div class="col-md-10">
+                        <input type="text" name="login" class="form-control" id="login"
+                               value="{% if login is defined and login is not null %}{{ login }}{% endif %}" placeholder="Логин пользователя">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="passwd">Пароль</label>
+                    <div class="col-md-10">
+                        <input type="password" name="passwd" class="form-control" id="passwd" placeholder="Пароль">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            <input type="checkbox" id="rememberme" name="rememberme" {% if login is defined and login is not null %}checked{% endif %}>
+                            <label for="rememberme">Запомнить меня</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Выполнить вход" class="btn btn-default btn-primary" />
+                    </div>
+                </div>
+            </form>
+        </section>
+        <br />
+        <hr class="bhr" />
+        <div>
+            <h6>Если у Вас еще нет учетной записи - зарегистрируйтесь:</h6>
+            <a href="/register" title="Зарегистрироваться на сайте" class="btn btn-default">Регистрация</a>
+        </div>
+    </div>
+</div>
+{% include 'footer.html.twig' %}
