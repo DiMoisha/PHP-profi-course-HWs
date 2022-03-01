@@ -1,0 +1,145 @@
+{% if menuItem is defined and menuItem == 'index' %}
+    </div>
+{% else %}
+    </div></div></div>
+{% endif %}
+<footer class="footer-wrapper hidden-print">
+    <div class="container">
+        <div class="row">
+            <adress class="hidden-xs col-sm-4 text-left vcard footer-menu-wrapper footer-info">
+                <span class="category hidden">Завод</span>&nbsp;
+                <p class="fn org">ООО "ЛАГОС"</p>
+                <p class="adr">
+                    <span class="locality">Московская область, Люберецкий район, п. Красково</span>,
+                    <span class="street-address">ул. 2-ая Заводская, д.2А</span>
+                </p>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <p>
+                    <!-- Yandex.Metrika informer -->
+                    <a href="https://metrika.yandex.ru/stat/?id=43775804&amp;from=informer"
+                       target="_blank" rel="nofollow">
+                        <img src="https://informer.yandex.ru/informer/43775804/3_0_FEFEFEFF_DEDEDEFF_0_uniques"
+                             style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" class="ym-advanced-informer" data-cid="43775804" data-lang="ru" />
+                    </a>
+                    <!-- /Yandex.Metrika informer -->
+                </p>
+            </adress>
+            <adress class="col-xs-6 col-sm-4 text-left vcard footer-menu-wrapper footer-info">
+                <p class="visible-xs fn org">ООО "ЛАГОС"</p>
+                <p class="visible-xs adr">
+                    <span class="locality">Московская область, Люберецкий район, п. Красково</span>,
+                    <span class="street-address">ул. 2-ая Заводская, д.2А</span>
+                    <br /><br />
+                </p>
+                <p class="buh-info">
+                    <span class="footer-info-header">По общим вопросам</span>
+                <p>
+                    <span class="glyphicon glyphicon-envelope email-marker"></span>&nbsp;
+                    <a class="email">lagos99@mail.ru ; lagos-ABZ@mail.ru</a>
+                </p>
+                </p>
+                <p class="disp-info">
+                    <span class="footer-info-header">Диспетчерская</span>
+                <p class="tel">
+                    <span class="glyphicon glyphicon-earphone phone-marker"></span>&nbsp;
+                    <abbr class="value">8-910-411-35-04</abbr>
+                </p>
+                <p>
+                    <span class="glyphicon glyphicon-dashboard dashboard-marker"></span>&nbsp;
+                    <span class="dashboard">С 8:00 до 17:00 с пн-вс</span>
+                </p>
+                </p>
+                <p  class="ca-info">
+                    <span class="footer-info-header">По вопросам о холодных смесях обращайтесь по телефону</span>
+                <p class="tel">
+                    <span class="glyphicon glyphicon-earphone phone-marker"></span>&nbsp;
+                    <abbr class="value">+7-903-212-64-36</abbr>
+                </p>
+                <p>
+                    <span class="glyphicon glyphicon-dashboard dashboard-marker"></span>&nbsp;
+                    <span class="dashboard">С 8:00 до 17:00 с пн-вс</span>
+                </p>
+                </p>
+                <p  class="ca-info">
+                    <span class="footer-info-header">Услуги испытательной лаборатории</span>
+                <p class="tel">
+                    <span class="glyphicon glyphicon-earphone phone-marker"></span>&nbsp;
+                    <abbr class="value">+7-903-212-64-36</abbr>
+                </p>
+                <p>
+                    <span class="glyphicon glyphicon-dashboard dashboard-marker"></span>&nbsp;
+                    <span class="dashboard">С 8:00 до 17:00 с пн-вс</span>
+                </p>
+                </p>
+            </adress>
+            <div class="col-xs-6 col-sm-4 footer-menu-wrapper">
+                <ul class="nav nav-pills nav-stacked footer-menu">
+                    <li class="navbar-header footer-info-header">ИНФОРМАЦИЯ</li>
+                    <li>
+                        <a href="/contact">Контакты</a>
+                    </li>
+                    <li>
+                        <a href="/news">Новости</a>
+                    </li>
+                    <li>
+                        <a href="/about">О компании</a>
+                    </li>
+                    <li>
+                        <a href="/reviews" class="reviews-item">ОТЗЫВЫ</a>
+                    </li>
+                </ul>
+                <p>&nbsp;</p>
+                <ul class="nav nav-pills nav-stacked footer-menu">
+                    <li class="navbar-header footer-info-header">ПОКУПАТЕЛЯМ</li>
+                    <li>
+                        <a href="/pricelist" >Прайс-лист</a>
+                    </li>
+                    <li>
+                        <a href="/calculator" >Калькулятор асфальта</a>
+                    </li>
+                    <li>
+                        <a href="/coldasphalt">Холодный асфальт</a>
+                    </li>
+                    <li>
+                        <a href="/asphalt">Асфальт</a>
+                    </li>
+                    <li >
+                        <a href="/emulsion">Битумные эмульсии</a>
+                    </li>
+                    <li>
+                        <a href="/services">Дорожное строительство</a>
+                    </li>
+                    <li >
+                        <a href="/laboratory">Услуги испытательной лаборатории</a>
+                    </li>
+                    <li>
+                        <a href="/delivery">Доставка</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid footer-bottom-wrapper">
+        <div class="container clearfix footer-bottom">
+            <p class="footer-copyright-info">
+                &copy;&nbsp;{% if fYear is defined and fYear is not null %}{{ fYear }}{% endif %}&nbsp;&nbsp;<span class="fn">ООО "ЛАГОС"</span>
+            </p>
+            <p class="pull-right back-to-top-wrap">
+                <a class="back-to-top" href="#top">
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                </a>
+            </p>
+        </div>
+    </div>
+</footer>
+<script src="/js/jquery.js"></script>
+<script src="/js/bootstrap.js"></script>
+<script src="/js/jqueryui.js"></script>
+</body>
+</html>

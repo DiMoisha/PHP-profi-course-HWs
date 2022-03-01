@@ -1,0 +1,50 @@
+{% include 'header.html.twig' %}
+{% if contentData is defined and contentData is iterable and contentData|length > 0 %}
+    <div class="pull-left text-center product-img-container">
+        <img class="img-responsive product-img"
+             src="/images/products/{% if contentData|first.picname is defined and
+             contentData|first.picname is not null %}{{ contentData|first.picname }}{% else %}default.jpg{% endif %}"
+             height="300" width="400" alt="{{ contentData|first.productname }}" />
+    </div>
+    <div class="text-right product-price-container">
+        <p class="product-price">Цена по предоплате без НДС:&nbsp; <b>{{ contentData|first.pricewonds }}&nbsp;руб.</b>
+        </p>
+        <p class="product-price">Цена по предоплате с НДС:&nbsp; <b>{{ contentData|first.price }}&nbsp;руб.</b>
+        </p>
+        <p class="product-unit">Единица измерения:&nbsp; <b>{{ contentData|first.unit }}</b>
+        </p>
+    </div>
+    <div class="text-right product-cart-container">
+        <form action="/addtocart" method="post" role="form" enctype = "multipart/form-data">
+            <input type="hidden" id="ReturnUrl" name="ReturnUrl" value="/product?id={{ contentData|first.productid }}">
+            <input type="hidden" id="productid" name="productid" value="{{ contentData|first.productid }}">
+            <input type="hidden" id="price" name="price" value="{{ contentData|first.price }}">
+            <button type="submit" class="btn btn-success btn-lg" role="button" value="Купить" title="Купить">
+                <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;В КОРЗИНУ
+            </button>
+        </form>
+    </div>
+    <div class="product-pics-container">
+    {% for pic in contentData %}
+        {% if pic.picname is defined and pic.picname is not null %}
+            <a href="/images/products/{{ pic.picname }}">
+                <img data-src="holder.js/120x90" class="img-thumbnail product-img-thumbnail"
+                     src="/images/products/thumbnails/{{ pic.picname }}" alt="{{ pic.picname }}" />
+            </a>
+        {% endif %}
+    {% endfor %}
+    </div>
+    {% if contentData|first.descr is defined and contentData|first.descr is not null %}
+        <div class="panel panel-default clearboth product-descr">
+            <div class="panel-heading">
+                <h2 class="panel-title">Описание продукции</h2>
+            </div>
+            <div class="panel-body">{{ contentData|first.descr|raw }}</div>
+        </div>
+    {% endif %}
+    <div class="text-left clearboth">
+        <hr class="bhr" />
+        <a href="" onclick="JavaScript:window.history.back(1); return false;" role="button" title="Возврат на предыдущую страницу">&laquo; Вернуться на предыдущую страницу</a>
+    </div>
+{% endif %}
+{% include 'footer.html.twig' %}

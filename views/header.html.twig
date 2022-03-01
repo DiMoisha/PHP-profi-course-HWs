@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Дмитрий Карасёв">
+    <meta name="description" content="{{ metaDescription }}" />
+    <meta name="keywords" content="{{ metaKeywords }}" />
+    <link rel="canonical" href="{{ pageCanonical }}" />
+    <title>{{ pageTitle }}</title>
+    <script src="/js/fontloader.js"></script>
+    <link href="/images/favicon.ico" rel="shortcut icon">
+    <link href="/css/styles.css" rel="stylesheet"/>
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jqueryui.js"></script>
+    <script src="/js/jqueryval.js"></script>
+    <script src="/js/modernizr.js"></script>
+</head>
+<body>
+<script>
+    if (!navigator.cookieEnabled) { alert('Включите cookie для комфортной работы с сайтом'); }
+</script>
+<header class="hidden-print">
+    <div class="hidden-xs top-menu-wrapper">
+        <div class="container clearfix ">
+            <ul class="nav navbar-nav top-menu">
+                <li role="menuitem">
+                    <a href="/delivery">Доставка</a>
+                </li>
+                <li role="menuitem">
+                    <a href="/pricelist">Прайс-лист</a>
+                </li>
+            </ul>
+            <div class="pull-right top-right">
+                {% if authUser is defined and authUser is not null %}
+                    <a href="/lk">
+                        <span class="glyphicon glyphicon-user"></span>&nbsp;{{ authUser }}
+                    </a>
+                    <a href="/logout" title="Выйти из личного кабинета">
+                        <span class="glyphicon glyphicon-log-out"></span>&nbsp;Выйти
+                    </a>
+                {% else %}
+                    <a href="/login" title="Войти в личный кабинет">
+                        <span class="glyphicon glyphicon-log-in"></span>&nbsp;Войти
+                    </a>
+                {% endif %}
+                <a href="/cart">
+                    <span class="glyphicon glyphicon-shopping-cart cart-marker"></span>
+                    {% if cartProductTotal is defined and cartProductTotal > 0 %}
+                        <span class="badge counter">&nbsp;{{ cartProductTotal }}</span>
+                    {% endif %}
+                    &nbsp;Корзина
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="navbar navbar-default navbar-static-top navbar-wrapper" role="navigation">
+        <div class="container clearfix">
+            <div class="navbar-header header-logo">
+                <button type="button" class="navbar-toggle btn-main-menu-xs" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand logo-brand-xs visible-xs" href="/Home">
+                    <img src="/images/logo-xs.png" width="210" height="55" >
+                </a>
+                <div class="row hidden-xs">
+                    <a class="navbar-brand logo-brand col-sm-4 col-md-3 hidden-xs" href="/">
+                        <img class="hidden-sm" src="/images/logo.png" width="260" height="74">
+                        <img class="visible-sm" src="/images/logo-xs.png" width="210" height="55">
+                    </a>
+                    <adress class="col-sm-8 col-md-9 vcard vcard-top">
+                        <div class="row">
+                            <div class="value-title fn org invisible" style="height:0;">ООО "ЛАГОС"</div>
+                            <div class="col-sm-6 col-md-7 text-center adr" >
+                                <span class="locality">Московская область, Люберецкий район, п. Красково</span>,&nbsp;
+                                <br class="hidden-sm" />
+                                <span class="street-address">ул. 2-ая Заводская, д. 2А</span>
+                            </div>
+                            <div class="col-sm-6 col-md-5 text-center">
+                                <div class="whs">
+                                    <span class="hidden-md hidden-lg">Работаем</span><span class="hidden-sm">Мы работаем</span>&nbsp;<span class="workhours">круглосуточно</span>
+                                </div>
+                                <div class="tel">
+                                    <abbr class="value">+7 (910) 411-35-04</abbr>
+                                </div>
+                            </div>
+                        </div>
+                    </adress>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid main-menu-wrapper">
+            <div class="container">
+                <nav class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav main-menu">
+                        <li role="menuitem">
+                            <a href="/">
+                                <span class="glyphicon glyphicon-home hidden-xs"></span>
+                                <span class="visible-xs">Главная</span>
+                            </a>
+                        </li>
+                        <li role="menuitem" class="{% if menuItem is defined and menuItem == 'about' %}active{% endif %}">
+                            <a href="/about" > О компании</a>
+                        </li>
+                        <li role="menuitem" class="{% if menuItem is defined and menuItem == 'products' %}active{% endif %}">
+                            <a href="/products" >Продукция</a>
+                        </li>
+                        <li role="menuitem" class="{% if menuItem is defined and menuItem == 'coldasphalt' %}active{% endif %}">
+                            <a href="/coldasphalt" >Холодный асфальт</a>
+                        </li>
+                        <li role="menuitem" class="{% if menuItem is defined and menuItem == 'contact' %}active{% endif %}">
+                            <a href="/contact">Контакты</a>
+                        </li>
+                        <li class="visible-xs {% if menuItem is defined and menuItem == 'reviews' %}active{% endif %}" role="menuitem">
+                            <a href="/reviews">Отзывы</a>
+                        </li>
+                        <li class="visible-xs {% if menuItem is defined and menuItem == 'login' %}active{% endif %}" role="menuitem">
+                            {% if authUser is defined and authUser is not null %}
+                                <a href="/lk">
+                                    <span class="glyphicon glyphicon-user"></span>&nbsp;{{ authUser }}
+                                </a>
+                                <a href="/logout" title="Выйти из личного кабинета">
+                                    <span class="glyphicon glyphicon-log-out"></span>&nbsp;Выйти
+                                </a>
+                            {% else %}
+                                <a href="/login" title="Войти в личный кабинет">
+                                    <span class="glyphicon glyphicon-log-in"></span>&nbsp;Войти в личный кабинет
+                                </a>
+                            {% endif %}
+                        </li>
+                        <li class="visible-xs {% if menuItem is defined and menuItem == 'cart' %}active{% endif %}" role="menuitem">
+                        <a href="/cart">
+                            <span class="glyphicon glyphicon-shopping-cart cart-marker"></span>
+                            {% if cartProductTotal is defined and cartProductTotal > 0 %}
+                                <span class="badge counter">&nbsp;{{ cartProductTotal }}</span>
+                            {% endif %}
+                            &nbsp;Корзина
+                        </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>
+{% if menuItem is defined and menuItem == 'home' %}
+    <div class="container body-content content-wrapper">
+{% else %}
+    <h1>{{ pageHeading }}</h1>
+    <div class="container body-content content-wrapper">
+        <div class="row">
+            <div class="content-block col-md-12 {% if menuItem is defined and menuItem == 'news' %}null-padding{% endif %}">
+{% endif %}
