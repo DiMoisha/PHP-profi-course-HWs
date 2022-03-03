@@ -1,0 +1,204 @@
+{% include 'header.html.twig' %}
+<script src="/js/controlbtns.js"></script>
+<div class="row">
+    <div class="col-md-12">
+        {% if contentData is defined and contentData.product is defined and contentData.product is iterable and contentData.product|length > 0 %}
+            {% if contentData is defined and contentData.warn is defined %}
+                {{ contentData.warning|raw }}
+                <br />
+            {% endif %}
+            <section id="productForm">
+                <form method="post" class="form-horizontal" role="form" enctype = "multipart/form-data">
+                    <input type="hidden" id="categoryid" name="categoryid" value="1">
+                    <input type="hidden" id="productid" name="productid" value="'.$product -> product -> productId.'">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="productname">Наименование товара</label>
+                        <div class="col-md-9">
+                            <textarea class="form-control multi-line" rows="3" name="productname" id="productname" required>{{ contentData.product|first.productname }}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="tabindex">Порядок следования</label>
+                        <div class="col-md-9">
+                            <input type="number" name="tabindex" class="form-control" id="tabindex" placeholder="Порядок следования" value = "{{ contentData.product|first.tabindex }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="unit">Единица измерения</label>
+                        <div class="col-md-9">
+                            <input type="text" name="unit" class="form-control" id="unit" placeholder="Единица измерения" value="{{ contentData.product|first.unit }}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="pricewonds">Цена по предоплате без НДС, руб.</label>
+                        <div class="col-md-9">
+                            <input type="text" name="pricewonds" class="form-control" id="pricewonds" placeholder="Цена по предоплате без НДС" value = "{{ contentData.product|first.pricewonds }}">
+                            <p class="help-block">* дробную часть цены вводите через точку.</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="price">Цена по предоплате с НДС, руб.</label>
+                        <div class="col-md-9">
+                            <input type="text" name="price" class="form-control" id="price" placeholder="Цена по предоплате с НДС" value = "{{ contentData.product|first.price }}">
+                            <p class="help-block">* дробную часть цены вводите через точку.</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="descr">Описание товара, можно html</label>
+                        <div class="col-md-9">
+                            <div style="padding-bottom:5px;">
+                                <input type="button" value="Заголовок" onclick="insert_h3('descr')" title="Вставить заголовок" />
+                                <input type="button" value="Ссылка" onclick="insert_Link('descr')" title="Вставить ссылку" />
+                                <input type="button" value="Картинка" onclick="insert_Img('descr')" title="Вставить картинку" />
+                                <input type="button" value="Строка жирным шрифтом" onclick="insert_Strong('descr')" title="Вставить строку выделенную жирным шрифтом" />
+                                <input type="button" value="Перенос строки" onclick="insert_Br('descr')" title="Вставить перенос строки" />
+                                <input type="button" value="Разделитель" onclick="insert_Hr('descr')" title="Вставить разделительную линию" />
+                                <input type="button" value="Отступ" onclick="insert_4p('descr')" title="Вставить отступ строки" />
+                            </div>
+                            <textarea class = "form-control multi-line" rows = "12" name="descr" id="descr">{{ contentData.product|first.descr }}</textarea>
+                            <p class="help-block">* введите описание товара в HTML-формате, либо в виде простого текста.</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="htmlpagetitle">Заголовок страницы товара</label>
+                        <div class="col-md-9">
+                            <input type="text" name="htmlpagetitle" class="form-control" id="htmlpagetitle" placeholder="Заголовок страницы товара" value="{{ contentData.product|first.htmlpagetitle }}">
+                            <p class="help-block">* введите максимально краткий заголовок страницы товара (не более 10 слов).</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="htmlmetadescr">Описание страницы товара</label>
+                        <div class="col-md-9">
+                            <textarea class = "form-control multi-line" rows = "3" name="htmlmetadescr" id="htmlmetadescr">{{ contentData.product|first.htmlmetadescr }}</textarea>
+                            <p class="help-block">* введите максимально краткое описание страницы товара.</p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label" for="htmlmetakeywords">Список ключевых слов</label>
+                        <div class="col-md-9">
+                            <textarea class = "form-control multi-line" rows = "3" name="htmlmetakeywords" id="htmlmetakeywords">{{ contentData.product|first.htmlmetakeywords }}</textarea>
+                            <p class="help-block">* введите максимально краткий список ключевых слов, по которым поисковые машины будут идентифицировать страницу товара.</p>
+                        </div>
+                    </div>
+                    <p>&nbsp;</p>
+                    <hr />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Текущее главное изображение</label>
+                        {% if contentData.product|first.picname is defined and contentData.product|first.picname is not null %}
+                            <input id="picname1" name="picname1" type="hidden" value="{{ contentData.product|first.picname }}">
+                            <img class="img-responsive product-img" src="/images/products/thumbnails/{{ contentData.product|first.picname }}" height="120" width="90"
+                                 alt="{{ contentData.product|first.picname }}" />
+                            <p>&nbsp;</p>
+                            <div>
+                                <label class="col-md-offset-4 col-md-3 control-label">Удалить изображение</label>
+                                <input class="form-control col-md-3 checkbox" id="delpic1" name="delpic1" type="checkbox" value="true">
+                            </div>
+                        {% else %}
+                            Нет изображения
+                        {% endif %}
+                        <p>&nbsp;</p>
+                        <div class="col-md-9">
+                            <input type="file" name="uploadpic1" accept=".jpg, .jpeg, .png, .gif" />
+                            <p class="help-block">* загружайте изображения в формате jpg, jpeg, bmp, gif, png</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Дополнительное изображение # 1</label>
+                        {% if contentData.product.1.picname is defined and contentData.product.1.picname is not null %}
+                            <input id="picname2" name="picname2" type="hidden" value="{{ contentData.product.1.picname }}">
+                            <img class="img-responsive product-img" src="/images/products/thumbnails/{{ contentData.product.1.picname }}" height="120" width="90"
+                                 alt="{{ contentData.product.1.picname }}" />
+                            <p>&nbsp;</p>
+                            <div>
+                                <label class="col-md-offset-4 col-md-3 control-label">Удалить изображение</label>
+                                <input class="form-control col-md-3 checkbox" id="delpic2" name="delpic2" type="checkbox" value="true">
+                            </div>
+                        {% else %}
+                            Нет изображения
+                        {% endif %}
+                        <p>&nbsp;</p>
+                        <div class="col-md-9">
+                            <input type="file" name="uploadpic2" accept=".jpg, .jpeg, .png, .gif" />
+                            <p class="help-block">* загружайте изображения в формате jpg, jpeg, bmp, gif, png</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Дополнительное изображение # 2</label>
+                        {% if contentData.product.2.picname is defined and contentData.product.2.picname is not null %}
+                            <input id="picname3" name="picname3" type="hidden" value="{{ contentData.product.2.picname }}">
+                            <img class="img-responsive product-img" src="/images/products/thumbnails/{{ contentData.product.2.picname }}" height="120" width="90"
+                                 alt="{{ contentData.product.2.picname }}" />
+                            <p>&nbsp;</p>
+                            <div>
+                                <label class="col-md-offset-4 col-md-3 control-label">Удалить изображение</label>
+                                <input class="form-control col-md-3 checkbox" id="delpic3" name="delpic3" type="checkbox" value="true">
+                            </div>
+                        {% else %}
+                            Нет изображения
+                        {% endif %}
+                        <p>&nbsp;</p>
+                        <div class="col-md-9">
+                            <input type="file" name="uploadpic3" accept=".jpg, .jpeg, .png, .gif" />
+                            <p class="help-block">* загружайте изображения в формате jpg, jpeg, bmp, gif, png</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Дополнительное изображение # 3</label>
+                        {% if contentData.product.3.picname is defined and contentData.product.3.picname is not null %}
+                            <input id="picname4" name="picname4" type="hidden" value="{{ contentData.product.3.picname }}">
+                            <img class="img-responsive product-img" src="/images/products/thumbnails/{{ contentData.product.3.picname }}" height="120" width="90"
+                                 alt="{{ contentData.product.3.picname }}" />
+                            <p>&nbsp;</p>
+                            <div>
+                                <label class="col-md-offset-4 col-md-3 control-label">Удалить изображение</label>
+                                <input class="form-control col-md-3 checkbox" id="delpic4" name="delpic4" type="checkbox" value="true">
+                            </div>
+                        {% else %}
+                            Нет изображения
+                        {% endif %}
+                        <p>&nbsp;</p>
+                        <div class="col-md-9">
+                            <input type="file" name="uploadpic4" accept=".jpg, .jpeg, .png, .gif" />
+                            <p class="help-block">* загружайте изображения в формате jpg, jpeg, bmp, gif, png</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Дополнительное изображение # 4</label>
+                        {% if contentData.product.4.picname is defined and contentData.product.4.picname is not null %}
+                            <input id="picname5" name="picname5" type="hidden" value="{{ contentData.product.4.picname }}">
+                            <img class="img-responsive product-img" src="/images/products/thumbnails/{{ contentData.product.4.picname }}" height="120" width="90"
+                                 alt="{{ contentData.product.4.picname }}" />
+                            <p>&nbsp;</p>
+                            <div>
+                                <label class="col-md-offset-4 col-md-3 control-label">Удалить изображение</label>
+                                <input class="form-control col-md-3 checkbox" id="delpic5" name="delpic5" type="checkbox" value="true">
+                            </div>
+                        {% else %}
+                            Нет изображения
+                        {% endif %}
+                        <p>&nbsp;</p>
+                        <div class="col-md-9">
+                            <input type="file" name="uploadpic5" accept=".jpg, .jpeg, .png, .gif" />
+                            <p class="help-block">* загружайте изображения в формате jpg, jpeg, bmp, gif, png</p>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="submit" value="Сохранить" class="btn btn-xs-sm-md btn-success" role="button" title="Сохранить товар">
+                            <a href="" onclick="JavaScript:window.history.back(1); return false;" role="button" class="btn btn-xs-sm-md btn-default pull-right"
+                               title="Возврат к списку товаров">
+                                Отмена
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </section>
+        {% endif %}
+    </div>
+</div>
+{% include 'footer.html.twig' %}
