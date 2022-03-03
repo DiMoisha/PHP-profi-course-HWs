@@ -1,0 +1,91 @@
+{% include 'header.html.twig' %}
+{% if contentData is defined %}
+    <h2 class="text-center">Здравствуйте, {% if authUser is defined and authUser is not null %}{{ authUser }}{% endif %}</h2>
+    <h3>Ваши регистрационные данные:</h3>
+    <div>
+        <div>
+            <label for="username">ИМЯ:</label>
+            <span id="username" class="bg-f3">{{ contentData|first.username }}</span>
+            <br />
+            <label for="login">ЛОГИН:</label>
+            <span id="login" class="bg-f3">{{ contentData|first.login }}</span>
+            <br />
+            <label for="email">E-MAIL:</label>
+            <span id="email" class="bg-f3">{{ contentData|first.email }}</span>
+            <br />
+            <br />
+            <a href="/edituser" title="Изменить ваши данные" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil"></span>&nbsp;Изменить
+            </a>
+        </div>
+        <hr />
+        <label>Вы обладаете правами:</label>
+        <br />
+        {% for item in contentData %}
+            <span class="bg-f3">{{ item.rolename }} сайта</span>
+            <br />
+        {% endfor %}
+        <br />
+        <label for="lastlogintime">Последний раз вы были:</label>
+        <span id="lastlogintime" class="bg-f3">{{ contentData|first.lastlogintime }}</span>
+    </div>
+    <hr class="bhr" />
+    <div>
+        <a href="/logout" title="Выйти из личного кабинета" class="btn btn-default">
+            <span class="glyphicon glyphicon-log-out"></span>&nbsp;Выйти
+        </a>
+        {% if contentData|first.roleid > 1 %}
+            <a href="/removeuser" title="Удалить учетную запись" class="btn btn-default pull-right">
+                <span class="glyphicon glyphicon-remove"></span>&nbsp;Удалить учетную запись
+            </a>
+        {% endif %}
+    </div>
+    {% for item in contentData %}
+        {% if item.roleid == 1 %}
+            <br />
+            <div>
+                <h3 class="bg-f3">Работа с содержимым сайта:</h3>
+                <hr class="bhr" />
+                <a href="/orders" title="Заказы" class="btn btn-default">
+                    <span class="glyphicon glyphicon-list-alt"></span>&nbsp;Заказы
+                </a>&nbsp;&nbsp;&nbsp;
+                <a href="/news" title="Новости" class="btn btn-default">
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp;Новости
+                </a>&nbsp;&nbsp
+                <a href="/reviews" title="Отзывы" class="btn btn-default">
+                    <span class="glyphicon glyphicon-comment"></span>&nbsp;Отзывы
+                </a>&nbsp;&nbsp
+                <a href="/feedback" title="Обратная связь" class="btn btn-default">
+                    <span class="glyphicon glyphicon-envelope"></span>&nbsp;Обратная связь
+                </a>&nbsp;&nbsp;&nbsp
+                <a href="/products" title="Продукция" class="btn btn-default">
+                    <span class="glyphicon glyphicon-th"></span>&nbsp;Продукция
+                </a>&nbsp;&nbsp;&nbsp
+                <a href="/articles" title="Статьи" class="btn btn-default">
+                    <span class="glyphicon glyphicon-text-color"></span>&nbsp;Статьи
+                </a>
+            </div>
+        {% elseif item.roleid > 1 %}
+            <br />
+            <div>
+                <h3 class="bg-f3">Ваши заказы, платежи, отзывы:</h3>
+                <hr class="bhr" />
+                <a href="/cart" title="Корзина" class="btn btn-default">
+                    <span class="glyphicon glyphicon-shopping-cart"></span>&nbsp;Корзина
+                </a>&nbsp;&nbsp;&nbsp;
+                <a href="/orders" title="Заказы" class="btn btn-default">
+                    <span class="glyphicon glyphicon-list-alt"></span>&nbsp;Заказы
+                </a>&nbsp;&nbsp;&nbsp;
+                <a href="/pays" title="Платежи" class="btn btn-default">
+                    <span class="glyphicon glyphicon-ruble"></span>&nbsp;Платежи
+                </a>
+                <a href="/reviews" title="Отзывы" class="btn btn-default">
+                    <span class="glyphicon glyphicon-comment"></span>&nbsp;Отзывы
+                </a>&nbsp;&nbsp
+            </div>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    <h2 class="text-center">Вы не авторизованы!</h2>
+{% endif %}
+{% include 'footer.html.twig' %}

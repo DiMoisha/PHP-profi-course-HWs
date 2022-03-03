@@ -1,0 +1,21 @@
+{
+  "name": "vendor_name/package_name",
+  "description": "description_text",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Dmitrii Karasev",
+      "email": "ooolagoc@yandex.ru"
+    }
+  ],
+  "require": {
+    "ext-gd": "*",
+    "ext-fileinfo": "*",
+    "ext-pdo": "*",
+    "ext-json": "*"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "*"
+  }
+}

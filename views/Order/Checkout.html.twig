@@ -1,0 +1,87 @@
+{% include 'header.html.twig' %}
+<div class="row">
+    <div class="col-md-12">
+        {% if contentData is defined %}
+            {{ contentData|raw }}
+            <br />
+        {% endif %}
+        <section id="checkoutForm">
+            <form id="checkoutForm" method="post" class="form-horizontal" role="form" enctype = "multipart/form-data">
+                <h2>Доставка</h2>
+                <p>&nbsp;&nbsp;&nbsp;Стоимость доставки рассчитывается отдельно в зависимости от расстояния до объекта и выбранных товаров. После оформления заказа наш менеджер свяжется с вами по телефону или e-mail для согласования точной стоимости доставки.</p>
+                <p>Если вы самостоятельно заберете свой заказ, то поставьте галочку "Самовывоз" и поле "Полный адрес доставки" оставьте пустым.</p>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="isdelivery">Самовывоз</label>
+                    <div class="col-md-9">
+                        <input class="form-control checkbox" id="isdelivery" name="isdelivery" type="checkbox" value="true">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="deliveryaddress">Полный адрес доставки</label>
+                    <div class="col-md-9">
+                        <textarea class = "form-control multi-line" rows = "3" name="deliveryaddress" id="deliveryaddress"></textarea>
+                    </div>
+                    <p>&nbsp;</p>
+                    <label class="col-md-3 control-label" for="ordermap">Кликните по карте, чтобы выбрать адрес</label>
+                    <div id="ordermap" class="col-md-9" style="height: 400px;"></div>
+                </div>
+                <hr />
+                <h2>Информация о покупателе</h2>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="customername">Ваше ФИО или наименование организации</label>
+                    <div class="col-md-9">
+                        <textarea class = "form-control multi-line" rows = "3" name="customername" id="customername" required></textarea>
+                        <p class="help-block">* полное наименование организации, ИП или ФИО частного лица</p>
+                    </div>
+                </div>
+                <h3>Контактные данные</h3>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="customertel">Ваш телефон</label>
+                    <div class="col-md-9">
+                        <input type="tel" name="customertel" class="form-control" id="customertel" pattern="+7-[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                               required placeholder="+7-000-000-0000">
+                        <p class="help-block">* в формате +7-XXX-XXX-XXXXX</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="contactperson">Контактное лицо</label>
+                    <div class="col-md-9">
+                        <input type="text" name="contactperson" class="form-control" id="contactperson" placeholder="Контактное лицо">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="customeremail">Ваш e-mail</label>
+                    <div class="col-md-9">
+                        <input type="email" name="customeremail" class="form-control" id="customeremail" placeholder="Ваш email" required>
+                    </div>
+                </div>
+                <hr />
+                <h2>Способ оплаты</h2>
+                <p>Если вы хотите оплатить заказ через интернет on-line, поставьте галочку "ON-LINE оплата".<br />
+                    Если вас интересует другой способ оплаты - оставьте поле "ON-LINE оплата" пустым, тогда способ оплаты вы согласуете с нашим менеджером.</p>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="isonlinepay">ON-LINE оплата</label>
+                    <div class="col-md-9">
+                        <input class="form-control checkbox" id="isonlinepay" name="isonlinepay" type="checkbox" value="true">
+                    </div>
+                </div>
+                <hr />
+                <h2>Дополнительная информация</h2>
+                <div class="form-group">
+                    <label class="col-md-3 control-label" for="ordernote">Примечение к заказу</label>
+                    <div class="col-md-9">
+                        <textarea class = "form-control multi-line" rows = "3" name="ordernote" id="ordernote"></textarea>
+                        <p class="help-block">* тут вы можете указать удобное для вас время доставки продукции и другие ваши пожелания</p>
+                    </div>
+                </div>
+                <p>&nbsp;</p>
+                <p align="center">
+                    <input class="actionButtons btn btn-xs-sm-md btn-success" type="submit" value="Подтвердить заказ" />
+                </p>
+            </form>
+        </section>
+    </div>
+</div>
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=72a328b5-a13a-4088-9448-e445f94d6357" type="text/javascript"></script>
+<script src="/js/event_reverse_geocode.js" type="text/javascript"></script>
+{% include 'footer.html.twig' %}

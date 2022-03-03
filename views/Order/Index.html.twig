@@ -1,0 +1,202 @@
+{% include 'header.html.twig' %}
+{% if contentData is defined and contentData.orders is defined and contentData.orders is iterable and contentData.orders|length > 0 %}
+    <div><a href="#" id="ref_list-btn" title="Обновить список заказов" class="btn btn-default"><span class="glyphicon glyphicon-refresh"></span>&nbsp;Обновить</a></div>
+    <script>
+        $(function(){
+            $("#ref_list-btn").click(function (){
+                $.ajax({
+                    url: "/orders",
+                    cache: false
+                })
+                    .done(function( html ) {
+                        $( "body" ).html( html );
+                    });
+
+                return false;
+            });
+        });
+    </script>
+    <hr class="bhr">
+    <div class="table-responsive product-table-wrapper">
+    <table class="table table-bordered table-hover product-table table-grey-header">
+        <thead>
+        <tr class="bg-f3">
+            <th>№ заказа</th>
+            <th>Размещен</th>
+            <th>Статус</th>
+            <th>Покупатель</th>
+            <th>Телефоны</th>
+            <th>Контактное лицо</th>
+            <th>E-mail</th>
+            <th>Доставка</th>
+            <th>Oплата</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for order in contentData.orders %}
+            <tr class="dark-border-top">
+                <td>
+                    <b class="text-center cl-red">
+                        <h3>{{ order.orderid }}</h3>
+                    </b>
+                </td>
+                <td>{{ order.ordertime }}</td>
+                <td {% if order.orderstatusid == 9 %}
+                        class="cl-red">{{ order.status }}
+                    {% else %}
+                        >
+                        {% if authUser is defined and authRoleId is defined and authRoleId is not null and authRoleId == 1 %}
+                            <select name="Status{{ order.orderid }}" id="Status{{ order.orderid }}" onchange="setStatus({{ order.orderid }}, this.value);">
+                                <option {% if order.orderstatusid == 2 %}selected{% endif %} value="2">Заказ отправлен в обработку</option>
+                                <option {% if order.orderstatusid == 5 %}selected{% endif %} value="5">Заказ обрабатывается менеджерами</option>
+                                <option {% if order.orderstatusid == 6 %}selected{% endif %} value="6">Заказ выполняется</option>
+                                <option {% if order.orderstatusid == 7 %}selected{% endif %} value="7">Заказ доставляется</option>
+                                <option {% if order.orderstatusid == 8 %}selected{% endif %} value="8">Заказ выполнен</option>
+                            </select>
+                            <script>
+                                function setStatus(orderId, statusId){
+                                    $.ajax({
+                                        url: "/setorderstatus?id="+orderId.toString()+"&status="+statusId.toString(),
+                                        cache: false
+                                    })
+                                        .done(function( html ) {
+                                            $( "body" ).html( html );
+                                        });
+
+                                    return false;
+                                };
+                            </script>
+                        {% else %}
+                            {{ order.status }}
+                        {% endif %}
+                    {% endif %}
+                </td>
+                <td>{{ order.customername }}</td>
+                <td>{{ order.customertel }}</td>
+                <td>{{ order.contactperson }}</td>
+                <td>{{ order.customeremail }}</td>
+                <td>
+                    {% if order.isdelivery == 1 %}
+                        Доставка: {{ order.deliveryaddress }}
+                    {% else %}
+                        <b>Самовывоз</b>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if order.isonlinepay == 1 %}
+                        <b>Оплата on-line</b>
+                        <br />
+                        <a href="/CreatePaymentOrder?.....payment params......"
+                           title="Оплата заказа через Яндекс Кассу" class="btn btn-xs-sm-md btn-default" role="button">
+                            <span class="glyphicon glyphicon-rub"></span>
+                        </a>
+                    {% else %}
+                        Оплата наличными или картой
+                    {% endif %}
+                </td>
+            </tr>
+            {% if contentData.details is defined and contentData.details is iterable and contentData.details|length > 0 %}
+                <tr>
+                    <td colspan="9" class="null-padding null-margin">
+                        <table class="table table-hover table-grey-header">
+                            <thead>
+                            <tr>
+                                <th>Товар</th>
+                                <th>Количество</th>
+                                <th>Ед. изм.</th>
+                                <th>Цена, руб.</th>
+                                <th>Сумма, руб.</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                {% for detail in contentData.details if detail.orderid==order.orderid %}
+                    <tr>
+                        <td>{{ detail.productname }}</td>
+                        <td>{{ detail.quantity }}</td>
+                        <td>{{ detail.unit }}</td>
+                        <td>{{ detail.price }}</td>
+                        <td>{{ detail.sm }}</td>
+                    </tr>
+                {% endfor %}
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            {% endif %}
+            {% if order.isdelivery == 1 %}
+                <tr>
+                    <td colspan="9" class="text-right">Стоимость доставки:
+                        {% if authUser is defined and authRoleId is defined and authRoleId is not null and authRoleId == 1 %}
+                            <input type="number" placeholder="0.0" step="0.01" min="0" max="99999999999.99" id="DeliverySum{{ order.orderid }}"
+                                   value="{{ order.deliverysum }}" pattern="\d+(.\d{0,3})?" required="required" size="12" />
+                            <a class="actionButtons btn btn-xs-sm btn-refresh" id="btn-DeliverySum{{ order.orderid }}" title="Обновить стоимость доставки">&#8634;</a>
+                            <script>
+                                $(function(){
+                                    $("#btn-DeliverySum{{ order.orderid }}").click(function (){
+                                        let sm = $("#DeliverySum{{ order.orderid }}").val();
+                                        $.ajax({
+                                            url: "/setorddelivery?id={{ order.orderid }}&deliverysum="+sm.toString(),
+                                            cache: false
+                                        })
+                                            .done(function( html ) {
+                                                $( "body" ).html( html );
+                                            });
+
+                                        return false;
+                                    });
+                                });
+                            </script>
+                        {% else %}
+                            {{ order.deliverysum }} руб.
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endif %}
+            <tr>
+                <td colspan="9" class="text-right">Стоимость товаров: {{ order.ordersum }} руб.</td>
+            </tr>
+            <tr>
+                <td>
+                    {% if order.orderstatusid < 3 %}
+                        <a href="#" id="cancel-btn-{{ order.orderid }}" title="Отменить заказ"
+                           class="btn btn-default btn-danger">
+                            <span class="glyphicon glyphicon-remove-sign"></span>&nbsp;Отменить заказ
+                        </a>
+                        <script>
+                            $(function(){
+                                $("#cancel-btn-{{ order.orderid }}").click(function (){
+                                    $.ajax({
+                                        url: "/cancelorder/?id={{ order.orderid }}",
+                                        cache: false
+                                    })
+                                        .done(function( html ) {
+                                            $( "body" ).html( html );
+                                        });
+
+                                    return false;
+                                });
+                            });
+                        </script>
+                    {% endif %}
+                </td>
+                <td colspan="9" class="text-right">
+                    <b>Сумма заказа: {{ order.ordersum + order.deliverysum }} руб.</b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="9" class="text-right">
+                    <h6>Примечание к заказу</h6>
+                    <p>{{ order.ordernote }}</p>
+                </td>
+            </tr>
+            <tr class="bg-f3">
+                <td colspan="9">&nbsp;</td>
+            </tr>
+        {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <p class="text-center bg-warning"><b>Заказов нет!</b></p>
+{% endif %}
+{% include 'footer.html.twig' %}

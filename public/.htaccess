@@ -1,0 +1,63 @@
+<IfModule mod_rewrite.c>
+    AddDefaultCharset utf-8
+    DirectoryIndex index.php index.html
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_FILENAME} -f [NC,OR]  # Если это файл - не учитывать регистр и следующее условие
+    RewriteCond %{REQUEST_FILENAME} -d [NC]     # Если это директория - не учитывать регистр
+    RewriteRule .* - [L]                        # любые символы и Остановиться
+    RewriteRule ^(.*)/$ ?path=$1 [QSA,L]        # Начало строки, любые символы, / , конец строки, добавить строку подзапроса и остановиться
+    RewriteRule ^(.*)$ ?path=$1 [QSA,L]         # Начало строки, любые символы, конец строки, добавить строку подзапроса и остановиться
+</IfModule>
+
+
+#<IfModule mod_rewrite.c>
+#	AddDefaultCharset utf-8
+#    DirectoryIndex index.php index.html
+#        RewriteEngine On
+##    RewriteBase /
+##    RewriteCond %{REQUEST_FILENAME} !-f
+##    RewriteCond %{REQUEST_FILENAME} !-d
+#    RewriteCond %{REQUEST_FILENAME} -f [NC,OR]
+#    RewriteCond %{REQUEST_FILENAME} -d [NC]
+##    RewriteRule (.*) /public/index.php?$1 [QSA,L]
+#    RewriteRule .* - [L]
+#    RewriteRule ^(.*)/$ ?path=$1 [QSA,L]
+#</IfModule>
+#
+#<IfModule mod_rewrite.c>
+#AddDefaultCharset utf-8
+##DirectoryIndex index.php index.html
+#    DirectorySlash Off
+#    RewriteEngine On
+#    RewriteCond %{REQUEST_FILENAME}/ -d [NC]
+#    RewriteCond %{REQUEST_FILENAME}/index.php !-f
+#    RewriteRule [^/]$ %{REQUEST_URI}/ [R=301,L]
+#    RewriteCond %{REQUEST_FILENAME} -d [NC]
+#    RewriteCond %{REQUEST_FILENAME}/index.php -f [NC,OR]
+#    RewriteRule ^(.*?)/$ /$1 [R=301,L]
+#    RewriteCond %{REQUEST_FILENAME} -d [NC]
+#    RewriteCond %{REQUEST_FILENAME}/index.php -f [NC,OR]
+#    RewriteRule [^/]$ %{REQUEST_URI}/index.php [L]
+#</IfModule>
+#
+#AddDefaultCharset UTF-8
+#DirectoryIndex index.php index.html
+##
+##RewriteEngine on
+##
+##    RewriteBase /
+##
+###RewriteCond %{REQUEST_FILENAME} -f [NC,OR]
+###RewriteCond %{REQUEST_FILENAME} -d [NC]
+###RewriteRule .* - [L]
+##    RewriteCond %{HTTP_HOST} (.*)
+##    RewriteCond %{REQUEST_URI} /$ [NC]
+##    RewriteRule ^(.*)(/)$ $1 [L,R=301]
+##    #RewriteRule ^(.*)(/)$ $1 [QSA,L]
+###RewriteRule ^(.*)/$ ?path=$1 [QSA,L]
+#
+#RewriteEngine on
+#RewriteCond %{REQUEST_FILENAME} !-d # не каталог
+#RewriteCond %{REQUEST_URI} ^(.+)/$ # окончивается в том числе на точку в конце
+#RewriteRule ^(.+)/$ /$1 [QSA,L] # убираем слеш в конце url - после последнего символа
